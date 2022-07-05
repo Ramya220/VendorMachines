@@ -17,10 +17,11 @@ namespace VendorMachine
 			RunningTotal = 0;
 			BalanceAmount = 0;
 		}
-		public void DepositCoin(double coin)
+		
+		public bool DepositCoin(double coin)
 		{
 			//the only valid coins are nickels,dimens,quaters
-			
+			bool isvalid = true;
 			switch (coin)
 			{
 				case (0.05):
@@ -37,10 +38,12 @@ namespace VendorMachine
 					break;
 				default:
 					Console.WriteLine("Invalid Entry");
+					isvalid = false;
 					break;
 
 
 			}
+			return isvalid;
 		}
 		public  bool checkTotal()
 		{
@@ -59,12 +62,13 @@ namespace VendorMachine
 			Console.WriteLine("************************");
 			Console.WriteLine();
 			Console.WriteLine("Please make your selection");
-			MakeFoodSelection(Convert.ToChar(Console.ReadLine().ToUpper()));
+			
 
 		}
-		public void MakeFoodSelection(char selection)
+		public bool MakeFoodSelection(char selection)
 		{
 			bool selectionok = false;
+			
 			
 			while (!selectionok)
 			{
@@ -78,7 +82,7 @@ namespace VendorMachine
 						break;
 					case 'H':
 						Console.WriteLine("Thank you for Choosong Chips");
-						selectioncost += 0.05;
+						selectioncost += 0.50;
 						ReturnChange(selectioncost);
 						selectionok = true;
 						break;
@@ -89,13 +93,15 @@ namespace VendorMachine
 						selectionok = true;
 						break;
 					default:
-						Console.WriteLine("Invalid Selection. Please re-enter your selection");
-						selection = Convert.ToChar(Console.ReadLine().ToUpper());
+						Console.WriteLine("Invalid Selection. Please retry");
 						selectionok = false;
 						break;
 
 				}
+				if (!selectionok)
+					break;
 			}
+			return selectionok;
 		}
 		private void ReturnChange( double selectioncost)
 		{
